@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/not-your-ai-job-filter-banner.png" alt="Not Your AI Job Filter banner" width="100%" />
+  <img src="https://raw.githubusercontent.com/fromtheboonies/not_your_ai_job_filter-public/main/assets/not-your-ai-job-filter-banner.png" alt="Not Your AI Job Filter banner" width="100%" />
 </p>
 
 # Not Your AI Job Filter
