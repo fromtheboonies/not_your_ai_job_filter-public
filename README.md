@@ -1,6 +1,4 @@
-<p align="center">
-  ![Not Your AI Job Filter banner](https://raw.githubusercontent.com/fromtheboonies/not_your_ai_job_filter-public/main/assets/not-your-ai-job-filter-banner.png)
-</p>
+![Not Your AI Job Filter banner](https://raw.githubusercontent.com/fromtheboonies/not_your_ai_job_filter-public/main/assets/not-your-ai-job-filter-banner.png)
 
 # Not Your AI Job Filter
 
