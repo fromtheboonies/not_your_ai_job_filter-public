@@ -1,6 +1,12 @@
+<p align="center">
+  <img src="assets/not-your-ai-job-filter-banner.png" alt="Not Your AI Job Filter banner" width="100%" />
+</p>
+
 # Not Your AI Job Filter
 
 A lightweight Python-based prototype for fetching emails from a Microsoft Outlook.com inbox using the Microsoft Graph API. This project serves as a foundation for developing intelligent job alert filtering tools powered by automation or AI.
+
+> ⚡ I originally built this to clean up my inbox during a casual job search. It now serves as a platform to experiment with email classification, NLP filtering, and automation workflows.
 
 > 💡 This repo is a sanitized, public version of a personal utility project. It does not include real credentials or production logic.
 
@@ -91,6 +97,11 @@ TENANT_ID=your_tenant_id_here
 ---
 
 ## 🚀 Running the Script
+
+> 🧪 Try it in 3 minutes:
+> 1. Register your app on https://entra.microsoft.com
+> 2. Fill in your credentials in `.env` (use the example.env file)
+> 3. Run `python fetch_graph_emails.py`
 
 ```bash
 python fetch_graph_emails.py
