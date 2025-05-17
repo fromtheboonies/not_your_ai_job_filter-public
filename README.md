@@ -1,18 +1,18 @@
 # Not Your AI Job Filter
 
-A Python-based prototype to connect to your Outlook.com inbox via the Microsoft Graph API, fetch recent job alert emails, and lay the groundwork for AI-assisted job filtering.
+A lightweight Python-based prototype for fetching emails from a Microsoft Outlook.com inbox using the Microsoft Graph API. This project serves as a foundation for developing intelligent job alert filtering tools powered by automation or AI.
 
-This is the project foundation. Later versions will classify, score, and organize emails based on relevance to your skills and preferences.
+> 💡 This repo is a sanitized, public version of a personal utility project. It does not include real credentials or production logic.
 
 ---
 
 ## 📦 Features
 
 - Secure OAuth2 login using MSAL (Microsoft Authentication Library)
-- Connects to your personal Microsoft account (Outlook.com)
-- Fetches your 5 most recent emails
-- Skips re-authentication if a cached token is available
-- Future-proofed for filtering, tagging, or sorting job-related messages
+- Connects to personal Microsoft accounts (e.g., Outlook.com)
+- Fetches the 5 most recent messages from your inbox
+- Reuses cached tokens when available to avoid repeated login prompts
+- Provides a base for future email filtering, scoring, and classification
 
 ---
 
@@ -21,8 +21,8 @@ This is the project foundation. Later versions will classify, score, and organiz
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/not_your_ai_job_filter.git
-cd not_your_ai_job_filter
+git clone https://github.com/YOUR_USERNAME/not_your_ai_job_filter-public.git
+cd not_your_ai_job_filter-public
 ````
 
 ### 2. Create and Activate a Virtual Environment
@@ -41,14 +41,16 @@ pip install -r requirements.txt
 
 ---
 
-## 🔐 Microsoft Entra App Registration (One-Time Setup)
+## 🔐 Microsoft Entra App Registration
+
+To use this project with your Outlook.com inbox, you'll need to register an application with Microsoft Entra (formerly Azure Active Directory).
+
+### Steps:
 
 1. Go to [https://entra.microsoft.com](https://entra.microsoft.com)
-2. Sign in with your **Outlook.com** or **Microsoft personal account**
+2. Sign in with your Microsoft account
 3. Navigate to **Microsoft Entra ID > App registrations**
 4. Click **+ New registration**
-
-### Registration Fields:
 
 | Field                   | Value                                                                      |
 | ----------------------- | -------------------------------------------------------------------------- |
@@ -56,36 +58,35 @@ pip install -r requirements.txt
 | Supported account types | ✅ Accounts in any organizational directory and personal Microsoft accounts |
 | Redirect URI            | ✅ Mobile & desktop → `http://localhost`                                    |
 
-### After Creating the App:
+### After Registration:
 
-1. Go to **Authentication** tab
+* Go to **Authentication**:
 
-   * Under **Platform configurations**, ensure `http://localhost` is added
-   * Under **Advanced settings**, enable **Allow public client flows**
+  * Ensure `http://localhost` is added under platform configurations
+  * Enable **"Allow public client flows"**
 
-2. Go to **API permissions** tab
+* Go to **API Permissions**:
 
-   * Click **+ Add a permission** → **Microsoft Graph** → **Delegated permissions**
-   * Add: `Mail.Read`
-   * Click **Grant admin consent** if available
+  * Add: `Mail.Read` (delegated)
+  * Click “Grant admin consent” if available
 
-3. Copy your:
+* Copy your:
 
-   * **Application (client) ID**
-   * **Directory (tenant) ID**
+  * `Application (client) ID`
+  * `Directory (tenant) ID`
 
 ---
 
-## 🔧 Configure Your Environment
+## 🔧 Environment Configuration
 
-Create a file named `.env` in the root directory:
+Save `example.env` file as `.env` file in the root directory and update the credentials with what was generated in Microsoft Entra Overview page for your app:
 
 ```env
 CLIENT_ID=your_app_client_id_here
 TENANT_ID=your_tenant_id_here
 ```
 
-Never commit this file to GitHub — it contains credentials.
+> ⚠️ **Do not commit this file** — it contains sensitive credentials for your registered app.
 
 ---
 
@@ -95,47 +96,46 @@ Never commit this file to GitHub — it contains credentials.
 python fetch_graph_emails.py
 ```
 
-### What Happens:
+This will:
 
-* The script tries to log in silently using a cached token
-* If none found or it’s expired, it opens a browser login
-* Upon success, it calls Microsoft Graph to retrieve your 5 most recent emails
-* Prints subject, sender, and preview text to the terminal
+* Attempt silent login using MSAL token cache
+* If no valid token exists, prompt you to authenticate via browser
+* Retrieve and print the 5 most recent messages from your inbox
 
 ---
 
 ## 🧱 Project Structure
 
 ```bash
-not_your_ai_job_filter/
+not_your_ai_job_filter-public/
 ├── fetch_graph_emails.py      # Main script
-├── requirements.txt           # Dependencies
-├── .env                       # Local credentials (not committed)
-├── .gitignore                 # Ignores .env, .venv, pyc files
-└── README.md                  # This file
+├── requirements.txt           # Python dependencies
+├── .env                       # Your credentials (excluded from Git)
+├── .gitignore                 # Prevents tracking sensitive/dev files
+└── README.md                  # You are here
 ```
 
 ---
 
-## 🛣️ Next Steps (Planned)
+## 📌 Future Enhancements (Ideas)
 
-* ⛏️ Extract and parse job alert emails (e.g., from LinkedIn, Indeed)
-* 🧠 Filter or score based on your skills, preferences, and red flags
-* 🗂️ Move emails into folders (`Mail.ReadWrite` permission required)
-* 💾 Save parsed data to `.json` or SQLite
-* 🖼️ Build a dashboard or CLI summary
+* Keyword- or skill-based job alert filtering
+* Message scoring and classification
+* Automatic tagging or folder sorting (e.g., “Ignore”, “Worth Reviewing”)
+* Export messages to JSON, CSV, or a local database
+* Optional GPT/NLP-based ranking of job listings
 
 ---
 
 ## 🧰 Dev Notes
 
-If you ever want to regenerate `requirements.txt` from your current environment:
+To regenerate your `requirements.txt` from your virtual environment:
 
 ```bash
 pip freeze > requirements.txt
 ```
 
-If MSAL login issues persist, try deleting cached tokens by calling:
+If MSAL token cache issues arise, you can clear cached accounts manually:
 
 ```python
 for acct in app.get_accounts():
@@ -144,6 +144,13 @@ for acct in app.get_accounts():
 
 ---
 
-## 🛡️ Disclaimer
+## 🛡️ License
 
-This is a personal utility project, not affiliated with Microsoft, Outlook, or any job platform. Do not share `.env` or access tokens publicly.
+This project is licensed under the [MIT License](LICENSE).
+You're free to use, modify, and distribute it — attribution is appreciated.
+
+---
+
+## 🙋‍♂️ Want to Use This As a Starter?
+
+You're welcome to fork and adapt this project. If you build something cool on top of it, let me know — I'd love to check it out!
